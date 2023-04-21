@@ -43,11 +43,18 @@ void createBillFooter(float total)
 
 int main()
 {
+    int opt;
+
     printf("\t============KTP. RESTAURANT============");
     printf("\n\n1.Generate Invoice");
     printf("\n2.Show All Invoices");
     printf("\n3.Search Invoice");
     printf("\n4.Exit");
+
+    printf("\n\nPlease select your preferred operation:\t");
+    scanf("%d", &opt);
+
+    printf("\n\n");
 
     return 0;
 }
