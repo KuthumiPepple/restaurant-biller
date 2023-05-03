@@ -1,4 +1,20 @@
 #include <stdio.h>
+#include <string.h>
+
+struct items
+{
+    char item[20];
+    float price;
+    int qty;
+};
+
+struct orders
+{
+    char customer[50];
+    char date[50];
+    int numOfItems;
+    struct items itm[50];
+};
 
 void createBillHeader(char name[50], char date[30])
 {
@@ -43,16 +59,56 @@ void createBillFooter(float total)
 
 int main()
 {
-    int opt;
+    int opt, n;
+    struct orders ord;
+    float total;
 
     printf("\t============KTP. RESTAURANT============");
+    printf("\n\nPlease select your preferred operation");
     printf("\n\n1.Generate Invoice");
     printf("\n2.Show All Invoices");
     printf("\n3.Search Invoice");
     printf("\n4.Exit");
 
-    printf("\n\nPlease select your preferred operation:\t");
+    printf("\n\nYour choice:\t");
     scanf("%d", &opt);
+    fgetc(stdin);
+
+    switch (opt)
+    {
+    case 1:
+        printf("\nPlease enter the name of the customer:\t");
+        fgets(ord.customer, 50, stdin);
+        ord.customer[strlen(ord.customer) - 1] = 0;
+        strcpy(ord.date, __DATE__);
+        printf("\nPlease enter the number of items:\t");
+        scanf("%d", &n);
+        ord.numOfItems = n;
+
+        for (int i = 0; i < n; i++)
+        {
+            fgetc(stdin);
+            printf("\n\n");
+            printf("Please enter item %d:\t", i + 1);
+            fgets(ord.itm[i].item, 20, stdin);
+            ord.itm[i].item[strlen(ord.itm[i].item) - 1] = 0;
+            printf("Please enter the quantity:\t");
+            scanf("%d", &ord.itm[i].qty);
+            printf("Please enter the unit price:\t");
+            scanf("%f", &ord.itm[i].price);
+            total += ord.itm[i].qty * ord.itm[i].price;
+        }
+
+        createBillHeader(ord.customer, ord.date);
+        for (int i = 0; i < ord.numOfItems; i++)
+        {
+            createBillBody(ord.itm[i].item, ord.itm[i].qty, ord.itm[i].price);
+        }
+        createBillFooter(total);
+
+    default:
+        break;
+    }
 
     printf("\n\n");
 
