@@ -62,6 +62,8 @@ int main()
     int opt, n;
     struct orders ord;
     float total;
+    FILE *fp;
+    char saveBill = 'y';
 
     printf("\t============KTP. RESTAURANT============");
     printf("\n\nPlease select your preferred operation");
@@ -105,6 +107,21 @@ int main()
             createBillBody(ord.itm[i].item, ord.itm[i].qty, ord.itm[i].price);
         }
         createBillFooter(total);
+
+        printf("\nDo you want to save the invoice? [y/n]: \t");
+        scanf("%s", &saveBill);
+
+        if (saveBill == 'y')
+        {
+            fp = fopen("invoice.dat", "a+");
+            fwrite(&ord, sizeof(struct orders), 1, fp);
+            if (fwrite != 0)
+                printf("\nSuccessfully saved!");
+            else
+                printf("\nError saving");
+            fclose(fp);
+        }
+        break;
 
     default:
         break;
